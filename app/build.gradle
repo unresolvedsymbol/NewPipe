@@ -112,24 +112,6 @@ checkstyle {
     toolVersion = checkstyleVersion
 }
 
-task runCheckstyle(type: Checkstyle) {
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-    exclude '**/R.java'
-    exclude '**/BuildConfig.java'
-    exclude 'main/java/us/shandian/giga/**'
-
-    classpath = configurations.checkstyle
-
-    showViolations true
-
-    reports {
-        xml.enabled true
-        html.enabled true
-    }
-}
-
 def outputDir = "${project.buildDir}/reports/ktlint/"
 def inputFiles = project.fileTree(dir: "src", include: "**/*.kt")
 
@@ -150,7 +132,7 @@ task formatKtlint(type: JavaExec) {
 }
 
 afterEvaluate {
-    preDebugBuild.dependsOn formatKtlint, runCheckstyle, runKtlint
+    preDebugBuild.dependsOn formatKtlint, runKtlint
 }
 
 dependencies {
